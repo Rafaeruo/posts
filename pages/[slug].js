@@ -34,7 +34,7 @@ export default function PostPage({ frontmatter, content }) {
         <title>{frontmatter.title}</title>
         <meta name="description" content={frontmatter.metaDesc} />
       </Head>
-      <div className="prose mx-auto px-4">
+      <div className="prose mx-auto px-4 max-w-5xl">
         <h1>{frontmatter.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: md().render(content) }} />
       </div>

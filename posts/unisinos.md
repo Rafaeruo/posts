@@ -1,198 +1,45 @@
 ---
-title: 'Next.js page options and how they work'
-metaTitle: 'Next.js page options and how they work'
-metaDesc: 'How to use pages in Next.js exploring the options'
-socialImage: images/22-09-2021.jpg
-date: '2021-09-22'
+title: "AI e Upscaling"
+metaTitle: "AI e Upscaling"
+metaDesc: "AI e Upscaling - o que é e aplicações"
+socialImage: images/ai-e-upscaling.png
+date: "2022-04-28"
 tags:
-  - nextjs
+  - ai
+  - upscaling
 ---
 
-Creating pages is an integral part of any framework. Today we'll be looking at three different types of pages that we can leverage in Next.js.
+(esse texto ainda está incompleto, será atualizado até o fim do dia de 28/04/2022)
 
-1. Static pages (`/about`, `/contact`)
-2. Dynamic page content (`/posts/all`)
-3. Dynamic page paths (`/posts/1`, `posts/2`)
+O ano é 2022 e os mais diversos tipos de inteligência artificial aparentam estar quase onipresentes em nosso dia a dia. Sempre que estamos acessando a internet, ou simplesmente com nossos celulares, elas estão trabalhando por trás das cortinas para tornar a nossa experiência a melhor possível. Porém você sabia que até as televisões modernas usam inteligência artificial para exibir suas imagens? Isso acontece através de uma técnica chamada “Upscaling”.
 
-Let's look at how we can create these in Next.js.
+## O que é Upscaling?
 
-## Static pages in Next.js
+O termo vem do Inglês, e o seu significado pode ser traduzido simplesmente como “aumentar”, nesse caso, quando se trata de imagens digitais rasterizadas, gerar uma nova imagem com uma quantidade maior de pixels. Nós podemos não perceber, mas a necessidade de ampliar imagens é bem frequente, seja na hora de postar uma foto em nossas redes sociais, ou quando vemos um filme no computador e colocamos em fullscreen, o tamanho da imagem que está sendo exibida provavelmente precisou ser alterado.
 
-To create static pages, we can simply create a file in our `pages` folder.
-This file can be a variety of extensions: `.js`, `.jsx`, `.ts`, `.tsx`.
+Tomando o caso de rodar um vídeo em fullscreen no YouTube como exemplo: imagine que o vídeo está rodando em uma resolução de 1920 x 1080 (FHD 16:9) em uma tela que possui uma resolução de 3840 x 2160 (4K 16:9). Para que esse vídeo ocupe a tela inteira, ele deve obrigatoriamente ser escalado, visto que possui menos pixels que o display. Isso é um processo que é feito em diversos cenários de forma relativamente “seamless”, e pode ser considerado como upscaling.
 
-Let's create a simple static contact page for our [Next.js tailwind starter](https://github.com/rebelchris/next-tailwind).
+No entanto, não é desse tipo de upscaling que esse post mira em abordar. Como estamos falando de inteligência artificial, vamos tratar do famigerado “AI Upscaling”, que além de redimensionar imagens, utiliza de técnicas para “recuperar detalhes” (frisando o entre aspas), remover artefatos e, no geral, melhorar a imagem para se parecer nativamente da resolução final.
 
-Create a file called `contact.js` in your `pages` folder.
+## Algumas aplicações
 
-```js
-import Head from 'next/head';
+### Televisões
 
-export default function Contact() {
-  return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <Head>
-        <title>Contact page</title>
-        <meta name='description' content='Contact us' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+Televisões modernas já contam com resoluções extremamente altas, comumente chegando à 4K, e em alguns casos até o que chamam de “8K” ou “16K”. No entanto, por mais que os displays desses televisores tenham altas resoluções, o conteúdo que é reproduzido nelas, em grande parte, ainda não conta com definições tão altas, como a maioria dos canais de TV, que contam com resoluções de até FHD, usualmente.
 
-      <div className='max-w-xs my-2 overflow-hidden rounded shadow-lg'>
-        <div className='px-6 py-4'>
-          <div className='mb-2 text-xl font-bold'>Contact us</div>
-          <p className='text-base text-grey-darker'>
-            This will be the place to contact us later on.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
+Por esse e outros motivos, grande parte das TVs vendidas atualmente contam com mecanismos de upscaling que utilizam de tecnologias como IA e deep learning para fazer com que as imagens reproduzidas pareçam ter a resolução nativa do painel.
 
-And now if we run our script again `npm run dev` we can visit `http://localhost:3000/contact`.
+### Videogames
 
-This should now show the page we just created.
+Quando vamos jogar jogos, especialmente no PC, comumente é possível alterar a resolução de renderização do jogo através de algum menu de configurações gráficas. É comum utilizar a mesma resolução do monitor que estamos utilizando, mas em alguns casos isso pode se tornar inviável. Isso pode acontecer quando a resolução é alta demais, o jogo demanda muito processamento gráfico e sua placa de vídeo e outros componentes não dão conta do recado, causando impactos na performance.
 
-![Contact page in Next.js](https://cdn.hashnode.com/res/hashnode/image/upload/v1631702332167/H9HkNDp6F.png)
+É nesses casos onde algumas tecnologias como o “DLSS” da NVidia, disponível em placas de vídeo da série RTX, entram em jogo. Utilizando técnicas de upscaling em tempo real, é possível renderizar o jogo em uma resolução menor, e, antes de mostrar em tela, aumentar sua resolução, aumentando a performance.
 
-## Creating dynamic based pages
+### Melhorar fotos ruins ou antigas
 
-However, we often want our page to contain data from an external resource.
+TODO
 
-Let's take the Anime API we used before as an example.
-The API endpoint we'll be using: `https://api.jikan.moe/v3/top/anime/1`.
+## Fim
 
-But let's first create a file called `shows.js` that should list all the top anime shows.
-
-We need to use the `getStaticProps` function for this to work. This function will fire and fetch data from an API.
-Then passes it to the actual view.
-
-So let's break it up into sections and fill those out one by one.
-
-```js
-function Shows({ shows }) {
-  return (
-    // HTML CODE
-  );
-}
-
-export async function getStaticProps() {
-  const shows = // TODO;
-  return {
-    props: {
-      shows,
-    },
-  };
-}
-
-export default Shows;
-```
-
-So this is the main wireframe. We have our function that contains the JSX code (HTML), then we have the `getStaticProps` function, which fires on build time.
-
-This can do API calls while we await it.
-And we can then return them as props.
-
-These props are passed to our primary function (Shows).
-
-So let's see how we can fetch data inside the `getStaticProps` function.
-
-```js
-const res = await fetch('https://api.jikan.moe/v3/top/anime/1');
-const shows = await res.json();
-```
-
-As you can see, top-level awaits are supported out of the box, which is super handy!
-We call the API, await the response, and convert it into a JSON object.
-
-Then as for our HTML, we can now use this `shows` object since we passed it to our function.
-
-```js
-function Shows({ shows }) {
-  return (
-    <div className='grid min-h-screen grid-cols-5 gap-4 p-5'>
-      {shows.top.map((show) => (
-        <div
-          key={show.id}
-          className='max-w-xs my-2 overflow-hidden rounded shadow-lg '
-        >
-          <img
-            className='flex-1 object-cover w-full h-80'
-            src={show.image_url}
-            alt={show.title}
-          />
-          <div className='px-6 py-4'>
-            <div className='mb-2 text-xl font-bold'>{show.title}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-```
-
-We create a simple render of each show's own card, with an image and title of the anime show.
-
-![Top anime show in Next.js](https://cdn.hashnode.com/res/hashnode/image/upload/v1631712831922/I1Yb9K2DQ.png)
-
-## Creating dynamic page paths
-
-We still only have one page that loads dynamic data with the above example.
-Let's say we want to create a single page for each show.
-
-These pages could host more detailed information about the show.
-
-In Next.js, we can create dynamic pages by wrapping them in brackets like `show/[id].js` where the `[id]` is dynamic.
-
-For this, we can leverage the `getStaticPaths` method.
-This can pre-fetch our endpoints.
-
-And we can still include the `getStaticProps` to retrieve the data on build time.
-
-Let's put this together.
-
-```js
-function Show(show) {
-  return <h1>{show.title}</h1>;
-}
-
-export async function getStaticPaths() {
-  const res = await fetch('https://api.jikan.moe/v3/top/anime/1');
-  const shows = await res.json();
-  const paths = shows.top.map((show) => {
-    return {
-      params: { id: show.mal_id.toString() },
-    };
-  });
-
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
-  const res = await fetch(`https://api.jikan.moe/v3/anime/${params.id}`);
-  const show = await res.json();
-  return { props: show };
-}
-
-export default Show;
-```
-
-Wow, quite a lot going on, right?
-First, we have a simple view to keep things easy. We use an `h1` to return the title of the single page.
-
-Then we use `getStaticPaths` to create a path for each top show.
-We use the `mal_id` to generate unique ID pages.
-
-Then we use the `getStaticProps` function to retrieve these IDs from the URL and fetch the detailed view for each show.
-
-It results in a single page for each show.
-
-![Single page in Next.js](https://cdn.hashnode.com/res/hashnode/image/upload/v1631715374299/92TyD_WIe.png)
-
-And that's it. We now have explored these three ways of creating pages in Next.js.
-I hope you found this helpful article. You can also find the complete code on [GitHub](https://github.com/rebelchris/next-tailwind/tree/pages).
-
-### Thank you for reading, and let's connect!
-
-Thank you for reading my blog. Feel free to subscribe to my email newsletter and connect on [Facebook](https://www.facebook.com/DailyDevTipsBlog) or [Twitter](https://twitter.com/DailyDevTips1)
+Obrigado por ler! Esse texto foi feito como atividade para a cadeira de Computação: Conceitos e Tendências da Profissão, do curso de Ciência da Computação da Unisinos.
+Inclusive, esse texto é open source. Se você clicar no ícone do Github abaixo, vai ser redirecionado ao arquivo desse post em um repositório. Sempre que alterado, ele vai ser automaticamente atualizado nesse site.
